@@ -1,0 +1,24 @@
+server:
+  port: 9016
+  servlet:
+    context-path: /rest/external
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:15432/atmmachinedb
+    username: atmmachinedb
+    password: atmmachinedb
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans,health,env,info,loggers,heapdump,threaddump,metrics
+      path-mapping:
+        health: status
+      base-path: /
+  endpoint:
+    health:
+      show-details: always
+      enabled: true

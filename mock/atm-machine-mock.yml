@@ -1,0 +1,14 @@
+version: "3"
+services:
+  atm-machine-database:
+    image: postgres:latest
+    container_name: atm-machine-database
+    hostname: atm-machine-database
+    volumes:
+      - ./.data/postgresql:/var/lib/postgresql/data
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRES_DB=atmmachinedb
+      - POSTGRES_USER=atmmachinedb
+      - POSTGRES_PASSWORD=atmmachinedb
