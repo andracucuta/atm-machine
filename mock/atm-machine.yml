@@ -1,0 +1,31 @@
+version: "3"
+services:
+  atm-machine-database:
+    image: postgres:12
+    volumes:
+      - ../.data/postgresql:/var/lib/postgresql/data
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRES_DB=atmmachinedb
+      - POSTGRES_USER=atmmachinedb
+      - POSTGRES_PASSWORD=atmmachinedb
+    networks:
+      - atm-machine-net
+
+  atm-machine-wiremock:
+    image: rodolpheche/wiremock:2.27.2
+    command:
+      - --global-response-templating
+      - --verbose
+    container_name: atm-machine-wiremock
+    hostname: atm-machine-wiremock
+    volumes:
+      - ./wiremock:/home/wiremock
+    ports:
+      - 28999:8080
+    networks:
+      - atm-machine-net
+
+networks:
+  atm-machine-net:
