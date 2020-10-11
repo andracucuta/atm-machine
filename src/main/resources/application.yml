@@ -2,6 +2,9 @@ server:
   port: 9016
   servlet:
     context-path: /rest/external
+  error:
+    whitelabel:
+      enabled: false
 
 spring:
   datasource:
@@ -14,7 +17,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: beans,health,env,info,loggers,heapdump,threaddump,metrics
+        include: health,info,heapdump,threaddump,metrics
       path-mapping:
         health: status
       base-path: /
@@ -22,3 +25,17 @@ management:
     health:
       show-details: always
       enabled: true
+
+external-services:
+  bank-service:
+    username: test
+    password: test
+    base-path: http://localhost:28999/bank-service/rest/external
+    account-get-path: ${external-services.bank-service.base-path}/accounts/{accountNo}/cards/{cardId}/activate
+    check-balance-get-path: ${external-services.bank-service.base-path}/accounts/{accountNo}/checkBalance
+    deposit-url-path: ${external-services.bank-service.base-path}/accounts/{accountNo}/deposit
+    withdraw-path: ${external-services.bank-service.base-path}/accounts/{accountNo}/withdraw
+
+springdoc:
+  swagger-ui:
+    path: /api-docs
